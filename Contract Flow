@@ -1,0 +1,306 @@
+import React, { useState } from 'react';
+import { ArrowDown, CheckCircle } from 'lucide-react';
+
+export default function ContractDecisionFlowchart() {
+  const [selectedPath, setSelectedPath] = useState([]);
+  const [selectedContract, setSelectedContract] = useState(null);
+
+  const handlePathClick = (path) => {
+    setSelectedPath(path);
+    setSelectedContract(null);
+  };
+
+  const handleContractClick = (contract) => {
+    setSelectedContract(contract);
+  };
+
+  const isPathSelected = (path) => {
+    return path.every((p, i) => selectedPath[i] === p);
+  };
+
+  const contracts = {
+    'fixedPrice': { name: 'Fixed Price / Lump Sum', desc: 'Best when scope is well-defined. You know exactly what you\'ll pay, and the contractor takes on the risk of cost overruns.' },
+    'unitRate': { name: 'Unit Rate / Schedule of Values', desc: 'Great for repetitive work where quantities may vary. You pay per unit (e.g., per square foot, per item) with shared risk.' },
+    'tmNTE': { name: 'T&M with NTE (Not-to-Exceed Cap)', desc: 'Flexible time and materials billing, but with a maximum budget cap to protect you from runaway costs.' },
+    'pureTM': { name: 'Pure T&M (Open Time & Material)', desc: 'Maximum flexibility for emergencies and troubleshooting. Pay for actual time and materials used, no cap.' },
+    'costPlus': { name: 'Cost-Plus', desc: 'Contractor bills actual costs plus a markup percentage or fee. Owner takes the risk but gets fast start and full transparency.' },
+    'gmp': { name: 'GMP (Guaranteed Maximum Price)', desc: 'Like Cost-Plus but with a hard cap. Any savings below the cap can be shared between you and the contractor.' }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 p-8 text-white">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-bold text-center mb-3">
+          Contract Type Decision Flowchart
+        </h1>
+        <p className="text-center text-slate-300 mb-8">
+          Click through the questions to find the right contract type
+        </p>
+
+        {/* START */}
+        <div className="flex flex-col items-center mb-3">
+          <div className="border-2 border-white p-4 rounded-lg bg-slate-800 max-w-md text-center">
+            <p className="text-lg font-bold">START: Is the scope of work clearly defined?</p>
+          </div>
+        </div>
+
+        <div className="flex justify-center mb-3">
+          <ArrowDown size={32} />
+        </div>
+
+        {/* First Level - YES/NO */}
+        <div className="grid grid-cols-2 gap-16 mb-4 max-w-5xl mx-auto">
+          {/* LEFT BRANCH - YES */}
+          <div className="flex flex-col items-center">
+            <button
+              onClick={() => handlePathClick(['yes'])}
+              className={`text-center mb-3 p-3 rounded border-2 transition-all ${
+                isPathSelected(['yes']) 
+                  ? 'bg-green-900/50 border-green-400 scale-105' 
+                  : 'bg-slate-700 border-slate-400 hover:border-green-400'
+              }`}
+            >
+              <p className="font-bold">YES — scope is clear.</p>
+              <p className="text-sm">Drawings complete.</p>
+            </button>
+            
+            {selectedPath[0] === 'yes' && (
+              <>
+                <ArrowDown size={24} className="mb-3" />
+                <div className="border-2 border-slate-400 p-4 rounded-lg bg-slate-700 w-full">
+                  <p className="font-semibold text-center text-sm">
+                    Do you want total cost certainty (no surprises)?
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+
+          {/* RIGHT BRANCH - NO */}
+          <div className="flex flex-col items-center">
+            <button
+              onClick={() => handlePathClick(['no'])}
+              className={`text-center mb-3 p-3 rounded border-2 transition-all ${
+                isPathSelected(['no']) 
+                  ? 'bg-blue-900/50 border-blue-400 scale-105' 
+                  : 'bg-slate-700 border-slate-400 hover:border-blue-400'
+              }`}
+            >
+              <p className="font-bold">NO — scope unclear, evolving,</p>
+              <p className="text-sm">or exploratory. Need flexibility.</p>
+            </button>
+            
+            {selectedPath[0] === 'no' && (
+              <>
+                <ArrowDown size={24} className="mb-3" />
+                <div className="border-2 border-slate-400 p-4 rounded-lg bg-slate-700 w-full">
+                  <p className="font-semibold text-center text-sm">
+                    Can you set an upper budget limit or control spend?
+                  </p>
+                </div>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* Second Level Answers */}
+        {selectedPath.length > 0 && (
+          <div className="grid grid-cols-4 gap-8 mb-4 max-w-6xl mx-auto">
+            {selectedPath[0] === 'yes' && (
+              <>
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => handlePathClick(['yes', 'yes'])}
+                    className={`text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all ${
+                      isPathSelected(['yes', 'yes']) 
+                        ? 'bg-green-900/50 border-green-400 scale-105' 
+                        : 'bg-slate-700 border-slate-400 hover:border-green-400'
+                    }`}
+                  >
+                    <p className="font-bold">YES — cost certainty</p>
+                    <p>and minimal admin work.</p>
+                  </button>
+                  {selectedPath[1] === 'yes' && <ArrowDown size={20} className="mb-2" />}
+                </div>
+                
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => handlePathClick(['yes', 'no'])}
+                    className={`text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all ${
+                      isPathSelected(['yes', 'no']) 
+                        ? 'bg-green-900/50 border-green-400 scale-105' 
+                        : 'bg-slate-700 border-slate-400 hover:border-green-400'
+                    }`}
+                  >
+                    <p className="font-bold">NO — prefer</p>
+                    <p>flexibility.</p>
+                  </button>
+                  {selectedPath[1] === 'no' && <ArrowDown size={20} className="mb-2" />}
+                </div>
+              </>
+            )}
+            
+            {selectedPath[0] === 'no' && (
+              <>
+                <div></div>
+                <div></div>
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => handlePathClick(['no', 'yes'])}
+                    className={`text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all ${
+                      isPathSelected(['no', 'yes']) 
+                        ? 'bg-blue-900/50 border-blue-400 scale-105' 
+                        : 'bg-slate-700 border-slate-400 hover:border-blue-400'
+                    }`}
+                  >
+                    <p className="font-bold">YES — want cap.</p>
+                    <p>Need budget control.</p>
+                  </button>
+                  {selectedPath[1] === 'yes' && <ArrowDown size={20} className="mb-2" />}
+                </div>
+                
+                <div className="flex flex-col items-center">
+                  <button
+                    onClick={() => handlePathClick(['no', 'no'])}
+                    className={`text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all ${
+                      isPathSelected(['no', 'no']) 
+                        ? 'bg-blue-900/50 border-blue-400 scale-105' 
+                        : 'bg-slate-700 border-slate-400 hover:border-blue-400'
+                    }`}
+                  >
+                    <p className="font-bold">NO — open-ended,</p>
+                    <p>fast-move work.</p>
+                  </button>
+                  {selectedPath[1] === 'no' && <ArrowDown size={20} className="mb-2" />}
+                </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* Contract Type Boxes */}
+        {selectedPath.length === 2 && (
+          <div className="grid grid-cols-4 gap-8 mb-6 max-w-6xl mx-auto">
+            {isPathSelected(['yes', 'yes']) && (
+              <>
+                <button
+                  onClick={() => handleContractClick('fixedPrice')}
+                  className={`border-2 p-4 rounded-lg transition-all ${
+                    selectedContract === 'fixedPrice'
+                      ? 'border-green-400 bg-green-900/50 scale-105'
+                      : 'border-slate-400 bg-slate-700 hover:border-green-400'
+                  }`}
+                >
+                  <p className="font-bold mb-2 text-center">**Fixed Price / Lump Sum**</p>
+                  <ul className="text-xs space-y-1 text-left">
+                    <li>- Scope known</li>
+                    <li>- Contractor risk</li>
+                    <li>- Predictable cost</li>
+                  </ul>
+                </button>
+                <div></div>
+                <div></div>
+                <div></div>
+              </>
+            )}
+            
+            {isPathSelected(['yes', 'no']) && (
+              <>
+                <div></div>
+                <button
+                  onClick={() => handleContractClick('unitRate')}
+                  className={`border-2 p-4 rounded-lg transition-all ${
+                    selectedContract === 'unitRate'
+                      ? 'border-green-400 bg-green-900/50 scale-105'
+                      : 'border-slate-400 bg-slate-700 hover:border-green-400'
+                  }`}
+                >
+                  <p className="font-bold mb-2 text-center">**Unit Rate / Schedule of Values**</p>
+                  <ul className="text-xs space-y-1 text-left">
+                    <li>- Repetitive work</li>
+                    <li>- Quantities vary</li>
+                    <li>- Shared risk</li>
+                  </ul>
+                </button>
+                <div></div>
+                <div></div>
+              </>
+            )}
+            
+            {isPathSelected(['no', 'yes']) && (
+              <>
+                <div></div>
+                <div></div>
+                <button
+                  onClick={() => handleContractClick('tmNTE')}
+                  className={`border-2 p-4 rounded-lg transition-all ${
+                    selectedContract === 'tmNTE'
+                      ? 'border-blue-400 bg-blue-900/50 scale-105'
+                      : 'border-slate-400 bg-slate-700 hover:border-blue-400'
+                  }`}
+                >
+                  <p className="font-bold mb-2 text-center">**T&M with NTE**</p>
+                  <p className="text-xs mb-2 text-center">(Time & Materials + Not-to-Exceed Cap)</p>
+                  <ul className="text-xs space-y-1 text-left">
+                    <li>- Scope unclear but need budget limit</li>
+                  </ul>
+                </button>
+                <div></div>
+              </>
+            )}
+            
+            {isPathSelected(['no', 'no']) && (
+              <>
+                <div></div>
+                <div></div>
+                <div></div>
+                <button
+                  onClick={() => handleContractClick('pureTM')}
+                  className={`border-2 p-4 rounded-lg transition-all ${
+                    selectedContract === 'pureTM'
+                      ? 'border-blue-400 bg-blue-900/50 scale-105'
+                      : 'border-slate-400 bg-slate-700 hover:border-blue-400'
+                  }`}
+                >
+                  <p className="font-bold mb-2 text-center">**Pure T&M**</p>
+                  <p className="text-xs mb-2 text-center">(Open Time & Material billing)</p>
+                  <ul className="text-xs space-y-1 text-left">
+                    <li>- Emergencies / troubleshooting</li>
+                  </ul>
+                </button>
+              </>
+            )}
+          </div>
+        )}
+
+        {/* RESULT */}
+        {selectedContract && (
+          <div className="mt-8 max-w-2xl mx-auto">
+            <div className="bg-gradient-to-r from-green-600 to-blue-600 p-8 rounded-xl shadow-2xl">
+              <div className="flex items-center gap-3 mb-4">
+                <CheckCircle size={32} />
+                <h2 className="text-3xl font-bold">Your Contract Type:</h2>
+              </div>
+              <p className="text-2xl font-bold mb-3">{contracts[selectedContract].name}</p>
+              <p className="text-lg text-slate-100">{contracts[selectedContract].desc}</p>
+            </div>
+          </div>
+        )}
+
+        {selectedPath.length > 0 && (
+          <div className="text-center mt-6">
+            <button
+              onClick={() => {
+                setSelectedPath([]);
+                setSelectedContract(null);
+              }}
+              className="px-6 py-2 bg-slate-600 hover:bg-slate-500 rounded-lg font-semibold transition-colors"
+            >
+              Reset & Try Again
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
