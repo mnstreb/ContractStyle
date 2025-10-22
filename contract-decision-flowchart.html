@@ -4,659 +4,372 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contract Type Decision Flowchart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* A little custom style to ensure a minimum height for the body */
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
-            background: linear-gradient(to bottom right, #0f172a, #1e293b);
-            color: white;
             min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .container {
-            max-width: 90rem;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 2.25rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #cbd5e1;
-            font-size: 1.125rem;
-            margin-bottom: 2rem;
-        }
-
-        .center {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .start-box {
-            border: 2px solid white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background-color: #1e293b;
-            max-width: 28rem;
-            text-align: center;
-            margin-bottom: 0.75rem;
-        }
-
-        .start-box p {
-            font-size: 1.125rem;
-            font-weight: bold;
-        }
-
-        .arrow-down {
-            width: 2rem;
-            height: 2rem;
-            margin: 0.75rem 0;
-        }
-
-        .grid-2 {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 4rem;
-            max-width: 80rem;
-            margin: 0 auto 1rem;
-        }
-
-        .grid-4 {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            max-width: 96rem;
-            margin: 0 auto 1rem;
-        }
-
-        .branch {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .choice-box {
-            text-align: center;
-            margin-bottom: 0.75rem;
-            padding: 0.75rem;
-            border-radius: 0.375rem;
-            border: 2px solid #94a3b8;
-            background-color: #334155;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-        }
-
-        .choice-box:hover {
-            transform: scale(1.05);
-        }
-
-        .choice-box.selected-green {
-            background-color: rgba(21, 128, 61, 0.5);
-            border-color: #4ade80;
-            transform: scale(1.05);
-        }
-
-        .choice-box.selected-blue {
-            background-color: rgba(30, 58, 138, 0.5);
-            border-color: #60a5fa;
-            transform: scale(1.05);
-        }
-
-        .choice-box.hover-green:hover {
-            border-color: #4ade80;
-        }
-
-        .choice-box.hover-blue:hover {
-            border-color: #60a5fa;
-        }
-
-        .choice-box p:first-child {
-            font-weight: bold;
-        }
-
-        .choice-box p {
-            font-size: 0.875rem;
-        }
-
-        .question-box {
-            border: 2px solid #94a3b8;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background-color: #334155;
-            width: 100%;
-        }
-
-        .question-box p {
-            font-weight: 600;
-            text-align: center;
-            font-size: 0.875rem;
-        }
-
-        .contract-box {
-            border: 2px solid #94a3b8;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            background-color: #334155;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .contract-box:hover {
-            border-color: #4ade80;
-        }
-
-        .contract-box.selected-contract-green {
-            border-color: #4ade80;
-            background-color: rgba(21, 128, 61, 0.5);
-            transform: scale(1.05);
-        }
-
-        .contract-box.selected-contract-blue {
-            border-color: #60a5fa;
-            background-color: rgba(30, 58, 138, 0.5);
-            transform: scale(1.05);
-        }
-
-        .contract-box .title {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .contract-box .subtitle-text {
-            font-size: 0.75rem;
-            margin-bottom: 0.5rem;
-            text-align: center;
-        }
-
-        .contract-box ul {
-            font-size: 0.75rem;
-            list-style-position: inside;
-            text-align: left;
-        }
-
-        .contract-box li {
-            margin-bottom: 0.25rem;
-        }
-
-        .result-box {
-            margin-top: 2rem;
-            max-width: 42rem;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .result-content {
-            background: linear-gradient(to right, #16a34a, #2563eb);
-            padding: 2rem;
-            border-radius: 0.75rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-        }
-
-        .result-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1rem;
-        }
-
-        .result-header h2 {
-            font-size: 1.875rem;
-            font-weight: bold;
-        }
-
-        .result-name {
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin-bottom: 0.75rem;
-        }
-
-        .result-desc {
-            font-size: 1.125rem;
-            color: #f1f5f9;
-        }
-
-        .reset-button {
-            text-align: center;
-            margin-top: 1.5rem;
-        }
-
-        .reset-button button {
-            padding: 0.5rem 1.5rem;
-            background-color: #475569;
-            color: white;
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            font-size: 1rem;
-        }
-
-        .reset-button button:hover {
-            background-color: #64748b;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .arrow-small {
-            width: 1.25rem;
-            height: 1.25rem;
-            margin: 0.5rem 0;
-        }
-
-        .check-icon {
-            width: 2rem;
-            height: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .grid-2 {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .grid-4 {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-            }
-
-            h1 {
-                font-size: 1.875rem;
-            }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <h1>Contract Type Decision Flowchart</h1>
-        <p class="subtitle">Click through the questions to find the right contract type</p>
+<body class="bg-gradient-to-br from-slate-900 to-slate-800 text-white font-sans p-4 md:p-8">
+
+    <div class="max-w-7xl mx-auto">
+        <h1 class="text-3xl md:text-4xl font-bold text-center mb-3">
+            Contract Type Decision Flowchart
+        </h1>
+        <p class="text-center text-slate-300 mb-8">
+            Click through the questions to find the right contract type
+        </p>
 
         <!-- START -->
-        <div class="center">
-            <div class="start-box">
-                <p>START: Is the scope of work clearly defined?</p>
+        <div class="flex flex-col items-center mb-3">
+            <div class="border-2 border-white p-4 rounded-lg bg-slate-800 max-w-md text-center">
+                <p class="text-lg font-bold">START: Is the scope of work clearly defined?</p>
             </div>
         </div>
 
-        <div class="center">
-            <svg class="arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-            </svg>
+        <div class="flex justify-center mb-3">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
         </div>
 
         <!-- First Level - YES/NO -->
-        <div class="grid-2">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-4 max-w-5xl mx-auto">
             <!-- LEFT BRANCH - YES -->
-            <div class="branch">
-                <div class="choice-box hover-green" id="choice-yes" onclick="handleChoice('yes')">
-                    <p>YES — scope is clear.</p>
-                    <p>Drawings complete.</p>
-                </div>
+            <div class="flex flex-col items-center">
+                <button id="btn-yes" class="text-center mb-3 p-3 rounded border-2 bg-slate-700 border-slate-400 hover:border-green-400 w-full transition-all">
+                    <p class="font-bold">YES — scope is clear.</p>
+                    <p class="text-sm">Drawings complete.</p>
+                </button>
                 
-                <div id="yes-arrow" class="hidden">
-                    <svg class="arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
-                </div>
-                
-                <div id="yes-question" class="question-box hidden">
-                    <p>Do you want total cost certainty (no surprises)?</p>
+                <div id="path-yes-down" class="hidden w-full">
+                    <div class="flex justify-center">
+                        <svg class="w-6 h-6 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </div>
+                    <div class="border-2 border-slate-400 p-4 rounded-lg bg-slate-700 w-full">
+                        <p class="font-semibold text-center text-sm">
+                            Do you want total cost certainty (no surprises)?
+                        </p>
+                    </div>
                 </div>
             </div>
 
             <!-- RIGHT BRANCH - NO -->
-            <div class="branch">
-                <div class="choice-box hover-blue" id="choice-no" onclick="handleChoice('no')">
-                    <p>NO — scope unclear, evolving,</p>
-                    <p>or exploratory. Need flexibility.</p>
-                </div>
+            <div class="flex flex-col items-center">
+                <button id="btn-no" class="text-center mb-3 p-3 rounded border-2 bg-slate-700 border-slate-400 hover:border-blue-400 w-full transition-all">
+                    <p class="font-bold">NO — scope unclear, evolving,</p>
+                    <p class="text-sm">or exploratory. Need flexibility.</p>
+                </button>
                 
-                <div id="no-arrow" class="hidden">
-                    <svg class="arrow-down" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
-                </div>
-                
-                <div id="no-question" class="question-box hidden">
-                    <p>Can you set an upper budget limit or control spend?</p>
+                <div id="path-no-down" class="hidden w-full">
+                     <div class="flex justify-center">
+                        <svg class="w-6 h-6 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                    </div>
+                    <div class="border-2 border-slate-400 p-4 rounded-lg bg-slate-700 w-full">
+                        <p class="font-semibold text-center text-sm">
+                            Can you set an upper budget limit or control spend?
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Second Level Answers -->
-        <div class="grid-4" id="second-level">
-            <!-- YES-YES -->
-            <div class="branch" id="yes-yes-container" class="hidden">
-                <div class="choice-box hover-green" id="choice-yes-yes" onclick="handleSecondChoice('yes', 'yes')">
-                    <p>YES — cost certainty</p>
+        <div id="second-level" class="hidden grid-cols-1 md:grid-cols-4 gap-8 mb-4 max-w-6xl mx-auto">
+            <!-- YES path options -->
+            <div id="second-level-yes-yes" class="flex flex-col items-center">
+                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-green-400">
+                    <p class="font-bold">YES — cost certainty</p>
                     <p>and minimal admin work.</p>
-                </div>
-                <div id="yes-yes-arrow" class="hidden">
-                    <svg class="arrow-small" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                </button>
+                <div class="arrow-container hidden">
+                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
-
-            <!-- YES-NO -->
-            <div class="branch" id="yes-no-container" class="hidden">
-                <div class="choice-box hover-green" id="choice-yes-no" onclick="handleSecondChoice('yes', 'no')">
-                    <p>NO — prefer</p>
+            <div id="second-level-yes-no" class="flex flex-col items-center">
+                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-green-400">
+                    <p class="font-bold">NO — prefer</p>
                     <p>flexibility.</p>
-                </div>
-                <div id="yes-no-arrow" class="hidden">
-                    <svg class="arrow-small" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                </button>
+                 <div class="arrow-container hidden">
+                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
-
-            <!-- NO-YES -->
-            <div class="branch" id="no-yes-container" class="hidden">
-                <div class="choice-box hover-blue" id="choice-no-yes" onclick="handleSecondChoice('no', 'yes')">
-                    <p>YES — want cap.</p>
+            
+            <!-- NO path options (with spacers) -->
+             <div id="second-level-no-spacer-1"></div>
+             <div id="second-level-no-spacer-2"></div>
+            <div id="second-level-no-yes" class="flex flex-col items-center">
+                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-blue-400">
+                    <p class="font-bold">YES — want cap.</p>
                     <p>Need budget control.</p>
-                </div>
-                <div id="no-yes-arrow" class="hidden">
-                    <svg class="arrow-small" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                </button>
+                 <div class="arrow-container hidden">
+                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
-
-            <!-- NO-NO -->
-            <div class="branch" id="no-no-container" class="hidden">
-                <div class="choice-box hover-blue" id="choice-no-no" onclick="handleSecondChoice('no', 'no')">
-                    <p>NO — open-ended,</p>
+            <div id="second-level-no-no" class="flex flex-col items-center">
+                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-blue-400">
+                    <p class="font-bold">NO — open-ended,</p>
                     <p>fast-move work.</p>
-                </div>
-                <div id="no-no-arrow" class="hidden">
-                    <svg class="arrow-small" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
-                    </svg>
+                </button>
+                 <div class="arrow-container hidden">
+                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
                 </div>
             </div>
         </div>
 
         <!-- Contract Type Boxes -->
-        <div class="grid-4" id="contract-boxes">
-            <!-- Fixed Price -->
-            <div class="contract-box hidden" id="contract-fixedPrice" onclick="selectContract('fixedPrice')">
-                <p class="title">**Fixed Price / Lump Sum**</p>
-                <ul>
-                    <li>- Scope known</li>
-                    <li>- Contractor risk</li>
-                    <li>- Predictable cost</li>
-                </ul>
+        <div id="contract-level" class="hidden grid-cols-1 md:grid-cols-4 gap-8 mb-6 max-w-6xl mx-auto">
+             <div id="contract-fixedPrice" class="md:col-start-1">
+                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-green-400">
+                    <p class="font-bold mb-2 text-center">Fixed Price / Lump Sum</p>
+                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
+                        <li>Scope known</li>
+                        <li>Contractor risk</li>
+                        <li>Predictable cost</li>
+                    </ul>
+                </button>
             </div>
-
-            <!-- Unit Rate -->
-            <div class="contract-box hidden" id="contract-unitRate" onclick="selectContract('unitRate')">
-                <p class="title">**Unit Rate / Schedule of Values**</p>
-                <ul>
-                    <li>- Repetitive work</li>
-                    <li>- Quantities vary</li>
-                    <li>- Shared risk</li>
-                </ul>
+             <div id="contract-unitRate" class="md:col-start-2">
+                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-green-400">
+                    <p class="font-bold mb-2 text-center">Unit Rate / Schedule of Values</p>
+                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
+                        <li>Repetitive work</li>
+                        <li>Quantities vary</li>
+                        <li>Shared risk</li>
+                    </ul>
+                </button>
             </div>
-
-            <!-- T&M with NTE -->
-            <div class="contract-box hidden" id="contract-tmNTE" onclick="selectContract('tmNTE')">
-                <p class="title">**T&M with NTE**</p>
-                <p class="subtitle-text">(Time & Materials + Not-to-Exceed Cap)</p>
-                <ul>
-                    <li>- Scope unclear but need budget limit</li>
-                </ul>
+             <div id="contract-tmNTE" class="md:col-start-3">
+                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
+                    <p class="font-bold mb-2 text-center">T&M with NTE</p>
+                    <p class="text-xs mb-2 text-center">(Time & Materials + Not-to-Exceed Cap)</p>
+                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
+                        <li>Scope unclear but need budget limit</li>
+                    </ul>
+                </button>
             </div>
-
-            <!-- Pure T&M -->
-            <div class="contract-box hidden" id="contract-pureTM" onclick="selectContract('pureTM')">
-                <p class="title">**Pure T&M**</p>
-                <p class="subtitle-text">(Open Time & Material billing)</p>
-                <ul>
-                    <li>- Emergencies / troubleshooting</li>
-                </ul>
+             <div id="contract-pureTM" class="md:col-start-4">
+                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
+                    <p class="font-bold mb-2 text-center">Pure T&M</p>
+                    <p class="text-xs mb-2 text-center">(Open Time & Material billing)</p>
+                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
+                        <li>Emergencies / troubleshooting</li>
+                    </ul>
+                </button>
             </div>
         </div>
 
-        <!-- Result Box -->
-        <div class="result-box hidden" id="result-box">
-            <div class="result-content">
-                <div class="result-header">
-                    <svg class="check-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                    </svg>
-                    <h2>Your Contract Type:</h2>
+        <!-- RESULT -->
+        <div id="result-box" class="hidden mt-8 max-w-2xl mx-auto">
+            <div class="bg-gradient-to-r from-green-600 to-blue-600 p-6 md:p-8 rounded-xl shadow-2xl">
+                <div class="flex items-center gap-3 mb-4">
+                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
+                    <h2 class="text-2xl md:text-3xl font-bold">Your Contract Type:</h2>
                 </div>
-                <p class="result-name" id="result-name"></p>
-                <p class="result-desc" id="result-desc"></p>
+                <p id="result-name" class="text-xl md:text-2xl font-bold mb-3"></p>
+                <p id="result-desc" class="text-base md:text-lg text-slate-100"></p>
             </div>
         </div>
 
         <!-- Reset Button -->
-        <div class="reset-button hidden" id="reset-container">
-            <button onclick="resetFlowchart()">Reset & Try Again</button>
+        <div id="reset-container" class="hidden text-center mt-6">
+            <button id="reset-btn" class="px-6 py-2 bg-slate-600 hover:bg-slate-500 rounded-lg font-semibold transition-colors">
+                Reset & Try Again
+            </button>
         </div>
     </div>
 
     <script>
+        const contracts = {
+            'fixedPrice': { name: 'Fixed Price / Lump Sum', desc: 'Best when scope is well-defined. You know exactly what you\'ll pay, and the contractor takes on the risk of cost overruns.' },
+            'unitRate': { name: 'Unit Rate / Schedule of Values', desc: 'Great for repetitive work where quantities may vary. You pay per unit (e.g., per square foot, per item) with shared risk.' },
+            'tmNTE': { name: 'T&M with NTE (Not-to-Exceed Cap)', desc: 'Flexible time and materials billing, but with a maximum budget cap to protect you from runaway costs.' },
+            'pureTM': { name: 'Pure T&M (Open Time & Material)', desc: 'Maximum flexibility for emergencies and troubleshooting. Pay for actual time and materials used, no cap.' },
+        };
+
         let selectedPath = [];
         let selectedContract = null;
 
-        const contracts = {
-            'fixedPrice': { 
-                name: 'Fixed Price / Lump Sum', 
-                desc: 'Best for well-defined projects with no expected changes. You know exactly what you\'ll pay, and the contractor takes on the risk of cost overruns.',
-                color: 'green'
-            },
-            'unitRate': { 
-                name: 'Unit Rate / Schedule of Values', 
-                desc: 'Great for repetitive work where quantities may vary. You pay per unit (e.g., per square foot, per item) with shared risk.',
-                color: 'green'
-            },
-            'tmNTE': { 
-                name: 'T&M with NTE (Not-to-Exceed Cap)', 
-                desc: 'Flexible time and materials billing, but with a maximum budget cap to protect you from runaway costs.',
-                color: 'blue'
-            },
-            'pureTM': { 
-                name: 'Pure T&M (Open Time & Material)', 
-                desc: 'Maximum flexibility for emergencies and troubleshooting. Pay for actual time and materials used, no cap.',
-                color: 'blue'
-            }
-        };
+        const btnYes = document.getElementById('btn-yes');
+        const btnNo = document.getElementById('btn-no');
+        const pathYesDown = document.getElementById('path-yes-down');
+        const pathNoDown = document.getElementById('path-no-down');
+        const secondLevel = document.getElementById('second-level');
+        const contractLevel = document.getElementById('contract-level');
+        const resultBox = document.getElementById('result-box');
+        const resetContainer = document.getElementById('reset-container');
+        const resetBtn = document.getElementById('reset-btn');
 
-        function handleChoice(choice) {
-            // Reset everything
-            selectedPath = [choice];
-            selectedContract = null;
-            
-            // Reset all selections
-            document.getElementById('choice-yes').classList.remove('selected-green');
-            document.getElementById('choice-no').classList.remove('selected-blue');
-            document.getElementById('yes-arrow').classList.add('hidden');
-            document.getElementById('no-arrow').classList.add('hidden');
-            document.getElementById('yes-question').classList.add('hidden');
-            document.getElementById('no-question').classList.add('hidden');
-            
-            // Hide second level
-            hideSecondLevel();
-            hideContractBoxes();
-            hideResult();
+        const secondLevelYesYes = document.getElementById('second-level-yes-yes');
+        const secondLevelYesNo = document.getElementById('second-level-yes-no');
+        const secondLevelNoYes = document.getElementById('second-level-no-yes');
+        const secondLevelNoNo = document.getElementById('second-level-no-no');
+        const secondLevelNoSpacer1 = document.getElementById('second-level-no-spacer-1');
+        const secondLevelNoSpacer2 = document.getElementById('second-level-no-spacer-2');
+        
+        const allSecondLevel = [secondLevelYesYes, secondLevelYesNo, secondLevelNoYes, secondLevelNoNo, secondLevelNoSpacer1, secondLevelNoSpacer2];
 
-            // Show selected path
-            if (choice === 'yes') {
-                document.getElementById('choice-yes').classList.add('selected-green');
-                document.getElementById('yes-arrow').classList.remove('hidden');
-                document.getElementById('yes-question').classList.remove('hidden');
-            } else {
-                document.getElementById('choice-no').classList.add('selected-blue');
-                document.getElementById('no-arrow').classList.remove('hidden');
-                document.getElementById('no-question').classList.remove('hidden');
-            }
-            
-            document.getElementById('reset-container').classList.remove('hidden');
-        }
+        const contractFixedPrice = document.getElementById('contract-fixedPrice');
+        const contractUnitRate = document.getElementById('contract-unitRate');
+        const contractTmNTE = document.getElementById('contract-tmNTE');
+        const contractPureTM = document.getElementById('contract-pureTM');
 
-        function handleSecondChoice(first, second) {
-            selectedPath = [first, second];
-            selectedContract = null;
-            
-            // Reset second level selections
-            document.getElementById('choice-yes-yes').classList.remove('selected-green');
-            document.getElementById('choice-yes-no').classList.remove('selected-green');
-            document.getElementById('choice-no-yes').classList.remove('selected-blue');
-            document.getElementById('choice-no-no').classList.remove('selected-blue');
-            document.getElementById('yes-yes-arrow').classList.add('hidden');
-            document.getElementById('yes-no-arrow').classList.add('hidden');
-            document.getElementById('no-yes-arrow').classList.add('hidden');
-            document.getElementById('no-no-arrow').classList.add('hidden');
-            
-            hideContractBoxes();
-            hideResult();
+        const allContracts = [contractFixedPrice, contractUnitRate, contractTmNTE, contractPureTM];
 
-            // Show selected
-            const id = `choice-${first}-${second}`;
-            const arrowId = `${first}-${second}-arrow`;
-            const color = first === 'yes' ? 'selected-green' : 'selected-blue';
-            
-            document.getElementById(id).classList.add(color);
-            document.getElementById(arrowId).classList.remove('hidden');
-            
-            // Show appropriate contract box
-            showContractBox(first, second);
-        }
-
-        function hideSecondLevel() {
-            document.getElementById('yes-yes-container').classList.add('hidden');
-            document.getElementById('yes-no-container').classList.add('hidden');
-            document.getElementById('no-yes-container').classList.add('hidden');
-            document.getElementById('no-no-container').classList.add('hidden');
-        }
-
-        function showSecondLevel(first) {
-            if (first === 'yes') {
-                document.getElementById('yes-yes-container').classList.remove('hidden');
-                document.getElementById('yes-no-container').classList.remove('hidden');
-            } else {
-                document.getElementById('no-yes-container').classList.remove('hidden');
-                document.getElementById('no-no-container').classList.remove('hidden');
-            }
-        }
-
-        function hideContractBoxes() {
-            document.getElementById('contract-fixedPrice').classList.add('hidden');
-            document.getElementById('contract-unitRate').classList.add('hidden');
-            document.getElementById('contract-tmNTE').classList.add('hidden');
-            document.getElementById('contract-pureTM').classList.add('hidden');
-            
-            document.getElementById('contract-fixedPrice').classList.remove('selected-contract-green', 'selected-contract-blue');
-            document.getElementById('contract-unitRate').classList.remove('selected-contract-green', 'selected-contract-blue');
-            document.getElementById('contract-tmNTE').classList.remove('selected-contract-green', 'selected-contract-blue');
-            document.getElementById('contract-pureTM').classList.remove('selected-contract-green', 'selected-contract-blue');
-        }
-
-        function showContractBox(first, second) {
-            let contractId = '';
-            
-            if (first === 'yes' && second === 'yes') {
-                contractId = 'contract-fixedPrice';
-            } else if (first === 'yes' && second === 'no') {
-                contractId = 'contract-unitRate';
-            } else if (first === 'no' && second === 'yes') {
-                contractId = 'contract-tmNTE';
-            } else if (first === 'no' && second === 'no') {
-                contractId = 'contract-pureTM';
-            }
-            
-            if (contractId) {
-                document.getElementById(contractId).classList.remove('hidden');
-            }
-        }
-
-        function selectContract(contractType) {
-            selectedContract = contractType;
-            
-            // Reset all contract selections
-            hideContractBoxes();
-            
-            // Show and highlight selected contract
-            const contractId = `contract-${contractType}`;
-            const color = contracts[contractType].color === 'green' ? 'selected-contract-green' : 'selected-contract-blue';
-            document.getElementById(contractId).classList.remove('hidden');
-            document.getElementById(contractId).classList.add(color);
-            
-            // Show result
-            showResult(contractType);
-        }
-
-        function showResult(contractType) {
-            const contract = contracts[contractType];
-            document.getElementById('result-name').textContent = contract.name;
-            document.getElementById('result-desc').textContent = contract.desc;
-            document.getElementById('result-box').classList.remove('hidden');
-        }
-
-        function hideResult() {
-            document.getElementById('result-box').classList.add('hidden');
-        }
-
-        function resetFlowchart() {
+        function reset() {
             selectedPath = [];
             selectedContract = null;
+
+            btnYes.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105');
+            btnNo.classList.remove('bg-blue-900/50', 'border-blue-400', 'scale-105');
+
+            pathYesDown.classList.add('hidden');
+            pathNoDown.classList.add('hidden');
+
+            secondLevel.classList.add('hidden');
+            secondLevel.classList.remove('grid');
+
+            allSecondLevel.forEach(el => {
+                el.classList.add('hidden');
+                const button = el.querySelector('button');
+                if(button) {
+                    button.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105', 'bg-blue-900/50', 'border-blue-400');
+                }
+                const arrow = el.querySelector('.arrow-container');
+                if (arrow) arrow.classList.add('hidden');
+            });
             
-            // Reset first level
-            document.getElementById('choice-yes').classList.remove('selected-green');
-            document.getElementById('choice-no').classList.remove('selected-blue');
-            document.getElementById('yes-arrow').classList.add('hidden');
-            document.getElementById('no-arrow').classList.add('hidden');
-            document.getElementById('yes-question').classList.add('hidden');
-            document.getElementById('no-question').classList.add('hidden');
-            
-            // Hide second level
-            hideSecondLevel();
-            
-            // Reset second level selections
-            document.getElementById('choice-yes-yes').classList.remove('selected-green');
-            document.getElementById('choice-yes-no').classList.remove('selected-green');
-            document.getElementById('choice-no-yes').classList.remove('selected-blue');
-            document.getElementById('choice-no-no').classList.remove('selected-blue');
-            document.getElementById('yes-yes-arrow').classList.add('hidden');
-            document.getElementById('yes-no-arrow').classList.add('hidden');
-            document.getElementById('no-yes-arrow').classList.add('hidden');
-            document.getElementById('no-no-arrow').classList.add('hidden');
-            
-            // Hide contract boxes and result
-            hideContractBoxes();
-            hideResult();
-            
-            document.getElementById('reset-container').classList.add('hidden');
+            contractLevel.classList.add('hidden');
+            contractLevel.classList.remove('grid');
+            allContracts.forEach(el => {
+                el.classList.add('hidden');
+                const button = el.querySelector('button');
+                 if(button) {
+                    button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
+                }
+            });
+
+            resultBox.classList.add('hidden');
+            resetContainer.classList.add('hidden');
         }
 
-        // Show second level when first choice is made
-        document.getElementById('choice-yes').addEventListener('click', function() {
-            setTimeout(() => showSecondLevel('yes'), 300);
-        });
+        function handleFirstChoice(choice) {
+            reset();
+            selectedPath = [choice];
+            
+            resetContainer.classList.remove('hidden');
+            secondLevel.classList.add('grid');
+            secondLevel.classList.remove('hidden');
+
+            if (choice === 'yes') {
+                btnYes.classList.add('bg-green-900/50', 'border-green-400', 'scale-105');
+                pathYesDown.classList.remove('hidden');
+                secondLevelYesYes.classList.remove('hidden');
+                secondLevelYesNo.classList.remove('hidden');
+            } else {
+                btnNo.classList.add('bg-blue-900/50', 'border-blue-400', 'scale-105');
+                pathNoDown.classList.remove('hidden');
+                secondLevelNoYes.classList.remove('hidden');
+                secondLevelNoNo.classList.remove('hidden');
+                secondLevelNoSpacer1.classList.remove('hidden');
+                secondLevelNoSpacer2.classList.remove('hidden');
+            }
+        }
         
-        document.getElementById('choice-no').addEventListener('click', function() {
-            setTimeout(() => showSecondLevel('no'), 300);
-        });
+        function handleSecondChoice(choice) {
+            selectedPath = [selectedPath[0], choice];
+            selectedContract = null;
+
+            // Reset second level styles
+            [secondLevelYesYes, secondLevelYesNo, secondLevelNoYes, secondLevelNoNo].forEach(el => {
+                 const button = el.querySelector('button');
+                 button.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105', 'bg-blue-900/50', 'border-blue-400');
+                 const arrow = el.querySelector('.arrow-container');
+                 if (arrow) arrow.classList.add('hidden');
+            });
+            // Reset contract styles and visibility
+            contractLevel.classList.add('hidden');
+            contractLevel.classList.remove('grid');
+             allContracts.forEach(el => {
+                el.classList.add('hidden');
+                const button = el.querySelector('button');
+                button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
+            });
+
+
+            let targetEl, colorClass, borderColor;
+            if (selectedPath[0] === 'yes') {
+                targetEl = choice === 'yes' ? secondLevelYesYes : secondLevelYesNo;
+                colorClass = 'bg-green-900/50';
+                borderColor = 'border-green-400';
+            } else {
+                targetEl = choice === 'yes' ? secondLevelNoYes : secondLevelNoNo;
+                colorClass = 'bg-blue-900/50';
+                borderColor = 'border-blue-400';
+            }
+
+            targetEl.querySelector('button').classList.add(colorClass, borderColor, 'scale-105');
+            targetEl.querySelector('.arrow-container').classList.remove('hidden');
+
+            contractLevel.classList.add('grid');
+            contractLevel.classList.remove('hidden');
+            resultBox.classList.add('hidden');
+
+            if (selectedPath[0] === 'yes' && selectedPath[1] === 'yes') contractFixedPrice.classList.remove('hidden');
+            if (selectedPath[0] === 'yes' && selectedPath[1] === 'no') contractUnitRate.classList.remove('hidden');
+            if (selectedPath[0] === 'no' && selectedPath[1] === 'yes') contractTmNTE.classList.remove('hidden');
+            if (selectedPath[0] === 'no' && selectedPath[1] === 'no') contractPureTM.classList.remove('hidden');
+        }
+
+        function handleContractChoice(contractKey) {
+            selectedContract = contractKey;
+            
+            // Reset styles
+             allContracts.forEach(el => {
+                const button = el.querySelector('button');
+                button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
+            });
+            
+            let targetEl, colorClass, borderColor;
+             if (selectedPath[0] === 'yes') {
+                colorClass = 'bg-green-900/50';
+                borderColor = 'border-green-400';
+            } else {
+                colorClass = 'bg-blue-900/50';
+                borderColor = 'border-blue-400';
+            }
+
+            if (contractKey === 'fixedPrice') targetEl = contractFixedPrice;
+            if (contractKey === 'unitRate') targetEl = contractUnitRate;
+            if (contractKey === 'tmNTE') targetEl = contractTmNTE;
+            if (contractKey === 'pureTM') targetEl = contractPureTM;
+            
+            targetEl.querySelector('button').classList.add(borderColor, colorClass, 'scale-105');
+
+            document.getElementById('result-name').textContent = contracts[contractKey].name;
+            document.getElementById('result-desc').textContent = contracts[contractKey].desc;
+            resultBox.classList.remove('hidden');
+        }
+
+        btnYes.addEventListener('click', () => handleFirstChoice('yes'));
+        btnNo.addEventListener('click', () => handleFirstChoice('no'));
+        resetBtn.addEventListener('click', reset);
+
+        secondLevelYesYes.querySelector('button').addEventListener('click', () => handleSecondChoice('yes'));
+        secondLevelYesNo.querySelector('button').addEventListener('click', () => handleSecondChoice('no'));
+        secondLevelNoYes.querySelector('button').addEventListener('click', () => handleSecondChoice('yes'));
+        secondLevelNoNo.querySelector('button').addEventListener('click', () => handleSecondChoice('no'));
+        
+        contractFixedPrice.querySelector('button').addEventListener('click', () => handleContractChoice('fixedPrice'));
+        contractUnitRate.querySelector('button').addEventListener('click', () => handleContractChoice('unitRate'));
+        contractTmNTE.querySelector('button').addEventListener('click', () => handleContractChoice('tmNTE'));
+        contractPureTM.querySelector('button').addEventListener('click', () => handleContractChoice('pureTM'));
+
     </script>
+
 </body>
 </html>
+
+
