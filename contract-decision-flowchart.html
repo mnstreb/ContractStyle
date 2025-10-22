@@ -14,6 +14,11 @@
             text-align: left;
             padding-left: 1.5rem;
         }
+        #result-desc ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-top: 0.75rem;
+        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 to-slate-800 text-white font-sans p-4 md:p-8">
@@ -197,11 +202,36 @@
 
     <script>
         const contracts = {
-            'lumpSum': { name: 'Lump Sum (Fixed Price)', desc: 'A high-certainty model where a single price is fixed for a detailed scope. <br><br><strong>Iron Triangle Focus:</strong> This contract enforces a fixed <strong>Cost</strong> and a fixed <strong>Scope</strong>. The contractor manages their schedule (Time) to deliver within that budget. Any owner-driven changes to Scope will require a change order, impacting Cost and potentially Time.' },
-            'unitPrice': { name: 'Unit Price (Remeasurement)', desc: 'Used when work activities are defined but quantities are not. Price is per unit. <br><br><strong>Iron Triangle Focus:</strong> This contract enforces a fixed <strong>Unit Cost</strong> (e.g., $ per cubic yard), but the final total <strong>Cost</strong> and final <strong>Scope</strong> (quantity) are flexible. It\'s a way to enforce fair pricing on an unknown volume of work.' },
-            'gmp': { name: 'Guaranteed Maximum Price (GMP) for Large Projects', desc: 'A cost-reimbursable contract with a ceiling, best for large, complex projects. It often includes a shared savings clause, creating an incentive for the contractor to be efficient. <br><br><strong>Iron Triangle Focus:</strong> Enforces a fixed maximum <strong>Cost</strong>. By necessity, the <strong>Scope</strong> and <strong>Time</strong> must remain flexible to accommodate the undefined nature of the work, though a target schedule is set.' },
-            'tmNTE': { name: 'Time & Materials with Not-to-Exceed (T&M w/ NTE) for Smaller Projects', desc: 'A simpler cost-reimbursable contract with a hard cost ceiling. It\'s more straightforward than a GMP and suitable for smaller-scale projects where administrative overhead needs to be minimal. <br><br><strong>Iron Triangle Focus:</strong> Like a GMP, this primarily enforces a fixed maximum <strong>Cost</strong>. The <strong>Scope</strong> and <strong>Time</strong> are flexible variables, allowing for agility within the capped budget.' },
-            'costPlus': { name: 'Cost-Plus or Time & Materials (T&M)', desc: 'The owner pays all actual costs plus a fee for profit/overhead. <br><br><strong>Iron Triangle Focus:</strong> This model prioritizes a flexible <strong>Scope</strong> and a fast <strong>Time</strong> to start work. By definition, <strong>Cost</strong> is the flexible lever and cannot be enforced. You can only audit the costs as they are incurred to ensure they are reasonable.' },
+            'lumpSum': { name: 'Lump Sum (Fixed Price)', desc: `A high-certainty model where a single price is fixed for a detailed scope. <br><br><strong>Iron Triangle Focus:</strong> Enforces a fixed <strong>Cost</strong> and a fixed <strong>Scope</strong>. The contractor manages their schedule (Time) to deliver within that budget.
+            <br><br><strong>Contractual Nuances:</strong>
+            <ul>
+                <li><strong>Enforceable Dates?</strong> Yes. Completion dates are a core term, often tied to Liquidated Damages for delays.</li>
+                <li><strong>Auditable Costs?</strong> No. This is not an "open-book" contract. The owner is not entitled to see the contractor's internal costs.</li>
+            </ul>` },
+            'unitPrice': { name: 'Unit Price (Remeasurement)', desc: `Used when work activities are defined but quantities are not. Price is per unit. <br><br><strong>Iron Triangle Focus:</strong> Enforces a fixed <strong>Unit Cost</strong> (e.g., $ per cubic yard), but the final total <strong>Cost</strong> and final <strong>Scope</strong> (quantity) are flexible.
+            <br><br><strong>Contractual Nuances:</strong>
+            <ul>
+                <li><strong>Enforceable Dates?</strong> Yes, milestones can be enforced, but the final completion date may be adjusted if quantities significantly differ from estimates.</li>
+                <li><strong>Auditable Costs?</strong> You audit the <strong>quantities</strong> of work completed, not the contractor's internal costs.</li>
+            </ul>` },
+            'gmp': { name: 'Guaranteed Maximum Price (GMP) for Large Projects', desc: `A cost-reimbursable contract with a ceiling, best for large, complex projects. It often includes a shared savings clause, creating an incentive for the contractor to be efficient. <br><br><strong>Iron Triangle Focus:</strong> Enforces a fixed maximum <strong>Cost</strong>. The <strong>Scope</strong> and <strong>Time</strong> must remain flexible to accommodate the undefined nature of the work, though a target schedule is set.
+            <br><br><strong>Contractual Nuances:</strong>
+            <ul>
+                <li><strong>Enforceable Dates?</strong> A target date is set and managed, but it is subject to change as the scope is refined. Enforceability is less strict than Lump Sum.</li>
+                <li><strong>Auditable Costs?</strong> Yes. This is a fully "open-book" contract. All costs (time cards, materials, etc.) must be submitted for audit.</li>
+            </ul>` },
+            'tmNTE': { name: 'Time & Materials with Not-to-Exceed (T&M w/ NTE) for Smaller Projects', desc: `A simpler cost-reimbursable contract with a hard cost ceiling. Suitable for smaller-scale projects where administrative overhead needs to be minimal. <br><br><strong>Iron Triangle Focus:</strong> Primarily enforces a fixed maximum <strong>Cost</strong>. The <strong>Scope</strong> and <strong>Time</strong> are flexible, allowing for agility within the capped budget.
+            <br><br><strong>Contractual Nuances:</strong>
+            <ul>
+                <li><strong>Enforceable Dates?</strong> Not strictly. A "period of performance" is set, but the schedule must be flexible as the scope is unknown. The primary control is the budget cap.</li>
+                <li><strong>Auditable Costs?</strong> Yes. This is an "open-book" contract. All time cards and material costs are fully auditable up to the NTE amount.</li>
+            </ul>` },
+            'costPlus': { name: 'Cost-Plus or Time & Materials (T&M)', desc: `The owner pays all actual costs plus a fee for profit/overhead. <br><br><strong>Iron Triangle Focus:</strong> Prioritizes a flexible <strong>Scope</strong> and a fast <strong>Time</strong> to start work. By definition, <strong>Cost</strong> is the flexible lever and cannot be enforced.
+            <br><br><strong>Contractual Nuances:</strong>
+            <ul>
+                <li><strong>Enforceable Dates?</strong> No. Schedules are targets only. The primary goal is flexibility to perform the needed work, whatever it takes.</li>
+                <li><strong>Auditable Costs?</strong> Yes. Full and detailed auditing of all costs is a fundamental requirement of this contract type.</li>
+            </ul>` },
         };
 
         let selectedPath = [];
@@ -395,5 +425,4 @@
     </script>
 </body>
 </html>
-
 
