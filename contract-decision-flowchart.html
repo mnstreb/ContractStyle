@@ -3,12 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract Type Decision Flowchart</title>
+    <title>Construction Contract & Bidding Strategy Flowchart</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* A little custom style to ensure a minimum height for the body */
         body {
             min-height: 100vh;
+        }
+        .contract-button ul {
+            text-align: left;
+            padding-left: 1.5rem;
         }
     </style>
 </head>
@@ -16,16 +20,16 @@
 
     <div class="max-w-7xl mx-auto">
         <h1 class="text-3xl md:text-4xl font-bold text-center mb-3">
-            Contract Type Decision Flowchart
+            Construction Contract & Bidding Strategy Flowchart
         </h1>
         <p class="text-center text-slate-300 mb-8">
-            Click through the questions to find the right contract type
+            A tool for Engineers to select a contract based on the "Iron Triangle": Scope, Time, and Cost. Remember, you can only fix two.
         </p>
 
-        <!-- START -->
-        <div class="flex flex-col items-center mb-3">
-            <div class="border-2 border-white p-4 rounded-lg bg-slate-800 max-w-md text-center">
-                <p class="text-lg font-bold">START: Is the scope of work clearly defined?</p>
+        <!-- START --><div class="flex flex-col items-center mb-3">
+            <div class="border-2 border-white p-4 rounded-lg bg-slate-800 max-w-lg text-center">
+                <p class="text-lg font-bold">START: Is the project scope & design well-defined?</p>
+                <p class="text-sm text-slate-300">(e.g., IFC Drawings, Finalized Specifications)</p>
             </div>
         </div>
 
@@ -33,13 +37,11 @@
             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
         </div>
 
-        <!-- First Level - YES/NO -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-4 max-w-5xl mx-auto">
-            <!-- LEFT BRANCH - YES -->
-            <div class="flex flex-col items-center">
+        <!-- First Level - YES/NO --><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 mb-4 max-w-5xl mx-auto">
+            <!-- LEFT BRANCH - YES (Defined Scope) --><div class="flex flex-col items-center">
                 <button id="btn-yes" class="text-center mb-3 p-3 rounded border-2 bg-slate-700 border-slate-400 hover:border-green-400 w-full transition-all">
-                    <p class="font-bold">YES — scope is clear.</p>
-                    <p class="text-sm">Drawings complete.</p>
+                    <p class="font-bold">YES — Scope is clearly defined.</p>
+                    <p class="text-sm">Design is mature, minimal changes expected.</p>
                 </button>
                 
                 <div id="path-yes-down" class="hidden w-full">
@@ -48,17 +50,16 @@
                     </div>
                     <div class="border-2 border-slate-400 p-4 rounded-lg bg-slate-700 w-full">
                         <p class="font-semibold text-center text-sm">
-                            Do you want total cost certainty (no surprises)?
+                           Are work quantities also well-defined and fixed?
                         </p>
                     </div>
                 </div>
             </div>
 
-            <!-- RIGHT BRANCH - NO -->
-            <div class="flex flex-col items-center">
+            <!-- RIGHT BRANCH - NO (Undefined Scope) --><div class="flex flex-col items-center">
                 <button id="btn-no" class="text-center mb-3 p-3 rounded border-2 bg-slate-700 border-slate-400 hover:border-blue-400 w-full transition-all">
-                    <p class="font-bold">NO — scope unclear, evolving,</p>
-                    <p class="text-sm">or exploratory. Need flexibility.</p>
+                    <p class="font-bold">NO — Scope is undefined or evolving.</p>
+                    <p class="text-sm">Early design, fast-track, or high uncertainty.</p>
                 </button>
                 
                 <div id="path-no-down" class="hidden w-full">
@@ -67,114 +68,127 @@
                     </div>
                     <div class="border-2 border-slate-400 p-4 rounded-lg bg-slate-700 w-full">
                         <p class="font-semibold text-center text-sm">
-                            Can you set an upper budget limit or control spend?
+                            Is it critical to cap the maximum financial exposure (cost ceiling)?
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Second Level Answers -->
-        <div id="second-level" class="hidden grid-cols-1 md:grid-cols-4 gap-8 mb-4 max-w-6xl mx-auto">
-            <!-- YES path options -->
-            <div id="second-level-yes-yes" class="flex flex-col items-center">
-                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-green-400">
-                    <p class="font-bold">YES — cost certainty</p>
-                    <p>and minimal admin work.</p>
-                </button>
-                <div class="arrow-container hidden">
-                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                </div>
-            </div>
-            <div id="second-level-yes-no" class="flex flex-col items-center">
-                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-green-400">
-                    <p class="font-bold">NO — prefer</p>
-                    <p>flexibility.</p>
-                </button>
-                 <div class="arrow-container hidden">
-                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                </div>
+        <!-- Second Level Answers --><div id="second-level" class="hidden grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 max-w-5xl mx-auto mb-4">
+            <!-- YES path options --><div id="second-level-yes-path" class="hidden w-full md:col-span-1">
+                 <div class="grid grid-cols-2 gap-4">
+                    <div id="second-level-yes-yes" class="flex flex-col items-center">
+                        <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-green-400 h-full">
+                            <p class="font-bold">YES — Quantities Fixed</p>
+                            <p>(e.g., building construction)</p>
+                        </button>
+                        <div class="arrow-container hidden">
+                            <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                    </div>
+                    <div id="second-level-yes-no" class="flex flex-col items-center">
+                        <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-green-400 h-full">
+                            <p class="font-bold">NO — Quantities Vary</p>
+                            <p>(e.g., earthworks, remediation)</p>
+                        </button>
+                         <div class="arrow-container hidden">
+                            <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                    </div>
+                 </div>
             </div>
             
-            <!-- NO path options (with spacers) -->
-             <div id="second-level-no-spacer-1"></div>
-             <div id="second-level-no-spacer-2"></div>
-            <div id="second-level-no-yes" class="flex flex-col items-center">
-                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-blue-400">
-                    <p class="font-bold">YES — want cap.</p>
-                    <p>Need budget control.</p>
-                </button>
-                 <div class="arrow-container hidden">
-                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
-                </div>
-            </div>
-            <div id="second-level-no-no" class="flex flex-col items-center">
-                <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-blue-400">
-                    <p class="font-bold">NO — open-ended,</p>
-                    <p>fast-move work.</p>
-                </button>
-                 <div class="arrow-container hidden">
-                    <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+            <!-- NO path options --><div id="second-level-no-path" class="hidden w-full md:col-span-1">
+                 <div class="grid grid-cols-2 gap-4">
+                    <div id="second-level-no-yes" class="flex flex-col items-center">
+                        <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-blue-400 h-full">
+                            <p class="font-bold">YES — Need a Cost Cap</p>
+                            <p>Budget certainty is paramount.</p>
+                        </button>
+                         <div class="arrow-container hidden">
+                            <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                    </div>
+                    <div id="second-level-no-no" class="flex flex-col items-center">
+                        <button class="text-center mb-2 text-sm p-3 rounded border-2 w-full transition-all bg-slate-700 border-slate-400 hover:border-blue-400 h-full">
+                            <p class="font-bold">NO — Flexibility is Key</p>
+                            <p>For emergencies or R&D work.</p>
+                        </button>
+                         <div class="arrow-container hidden">
+                            <svg class="w-5 h-5 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Contract Type Boxes -->
-        <div id="contract-level" class="hidden grid-cols-1 md:grid-cols-4 gap-8 mb-6 max-w-6xl mx-auto">
-             <div id="contract-fixedPrice" class="md:col-start-1">
-                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-green-400">
-                    <p class="font-bold mb-2 text-center">Fixed Price / Lump Sum</p>
-                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
-                        <li>Scope known</li>
-                        <li>Contractor risk</li>
-                        <li>Predictable cost</li>
+        <!-- Contract Type Boxes --><div id="contract-level" class="hidden grid-cols-1 md:grid-cols-4 gap-8 mb-6 max-w-6xl mx-auto">
+             <div id="contract-lumpSum" class="md:col-start-1">
+                <button class="contract-button border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-green-400">
+                    <p class="font-bold mb-2 text-center">Lump Sum / Fixed Price</p>
+                    <ul class="text-xs space-y-1 list-disc">
+                        <li><strong>Fixes:</strong> Scope, Cost</li>
+                        <li><strong>Flexible:</strong> Time (by contractor)</li>
+                        <li>Max risk on contractor.</li>
                     </ul>
                 </button>
             </div>
-             <div id="contract-unitRate" class="md:col-start-2">
-                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-green-400">
-                    <p class="font-bold mb-2 text-center">Unit Rate / Schedule of Values</p>
-                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
-                        <li>Repetitive work</li>
-                        <li>Quantities vary</li>
-                        <li>Shared risk</li>
+             <div id="contract-unitPrice" class="md:col-start-2">
+                <button class="contract-button border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-green-400">
+                    <p class="font-bold mb-2 text-center">Unit Price / Remeasurement</p>
+                    <ul class="text-xs space-y-1 list-disc">
+                        <li><strong>Fixes:</strong> Unit Rates</li>
+                        <li><strong>Flexible:</strong> Final Cost, Scope</li>
+                        <li>Shared risk profile.</li>
                     </ul>
                 </button>
             </div>
-             <div id="contract-tmNTE" class="md:col-start-3">
-                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
-                    <p class="font-bold mb-2 text-center">T&M with NTE</p>
-                    <p class="text-xs mb-2 text-center">(Time & Materials + Not-to-Exceed Cap)</p>
-                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
-                        <li>Scope unclear but need budget limit</li>
+             <div id="contract-gmp">
+                <button class="contract-button border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
+                    <p class="font-bold mb-2 text-center">GMP (For Large Projects)</p>
+                    <ul class="text-xs space-y-1 list-disc">
+                        <li><strong>Primary Fix:</strong> Max Cost</li>
+                        <li><strong>Flexible:</strong> Scope, Time</li>
+                        <li>Includes shared savings incentive.</li>
                     </ul>
                 </button>
             </div>
-             <div id="contract-pureTM" class="md:col-start-4">
-                <button class="border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
-                    <p class="font-bold mb-2 text-center">Pure T&M</p>
-                    <p class="text-xs mb-2 text-center">(Open Time & Material billing)</p>
-                    <ul class="text-xs space-y-1 text-left list-disc list-inside">
-                        <li>Emergencies / troubleshooting</li>
+             <div id="contract-tmNTE">
+                <button class="contract-button border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
+                    <p class="font-bold mb-2 text-center">T&M w/ NTE (For Small Projects)</p>
+                     <ul class="text-xs space-y-1 list-disc">
+                        <li><strong>Primary Fix:</strong> Max Cost</li>
+                        <li><strong>Flexible:</strong> Scope, Time</li>
+                        <li>Simpler, no shared savings.</li>
+                    </ul>
+                </button>
+            </div>
+             <div id="contract-costPlus" class="md:col-start-4">
+                <button class="contract-button border-2 p-4 rounded-lg transition-all w-full h-full border-slate-400 bg-slate-700 hover:border-blue-400">
+                    <p class="font-bold mb-2 text-center">Cost-Plus / T&M</p>
+                    <p class="text-xs mb-2 text-center">(Time & Materials)</p>
+                    <ul class="text-xs space-y-1 list-disc">
+                        <li><strong>Fixes:</strong> None (maybe Time)</li>
+                        <li><strong>Flexible:</strong> Cost, Scope</li>
+                        <li>Max risk on owner.</li>
                     </ul>
                 </button>
             </div>
         </div>
 
-        <!-- RESULT -->
-        <div id="result-box" class="hidden mt-8 max-w-2xl mx-auto">
+        <!-- RESULT --><div id="result-box" class="hidden mt-8 max-w-3xl mx-auto">
             <div class="bg-gradient-to-r from-green-600 to-blue-600 p-6 md:p-8 rounded-xl shadow-2xl">
                 <div class="flex items-center gap-3 mb-4">
                      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><path d="m9 11 3 3L22 4"></path></svg>
-                    <h2 class="text-2xl md:text-3xl font-bold">Your Contract Type:</h2>
+                    <h2 class="text-2xl md:text-3xl font-bold">Recommended Contract Strategy:</h2>
                 </div>
                 <p id="result-name" class="text-xl md:text-2xl font-bold mb-3"></p>
                 <p id="result-desc" class="text-base md:text-lg text-slate-100"></p>
             </div>
         </div>
 
-        <!-- Reset Button -->
-        <div id="reset-container" class="hidden text-center mt-6">
+        <!-- Reset Button --><div id="reset-container" class="hidden text-center mt-6">
             <button id="reset-btn" class="px-6 py-2 bg-slate-600 hover:bg-slate-500 rounded-lg font-semibold transition-colors">
                 Reset & Try Again
             </button>
@@ -183,10 +197,11 @@
 
     <script>
         const contracts = {
-            'fixedPrice': { name: 'Fixed Price / Lump Sum', desc: 'Best when scope is well-defined. You know exactly what you\'ll pay, and the contractor takes on the risk of cost overruns.' },
-            'unitRate': { name: 'Unit Rate / Schedule of Values', desc: 'Great for repetitive work where quantities may vary. You pay per unit (e.g., per square foot, per item) with shared risk.' },
-            'tmNTE': { name: 'T&M with NTE (Not-to-Exceed Cap)', desc: 'Flexible time and materials billing, but with a maximum budget cap to protect you from runaway costs.' },
-            'pureTM': { name: 'Pure T&M (Open Time & Material)', desc: 'Maximum flexibility for emergencies and troubleshooting. Pay for actual time and materials used, no cap.' },
+            'lumpSum': { name: 'Lump Sum (Fixed Price)', desc: 'A high-certainty model where a single price is fixed for a detailed scope. <br><br><strong>Iron Triangle Focus:</strong> This contract enforces a fixed <strong>Cost</strong> and a fixed <strong>Scope</strong>. The contractor manages their schedule (Time) to deliver within that budget. Any owner-driven changes to Scope will require a change order, impacting Cost and potentially Time.' },
+            'unitPrice': { name: 'Unit Price (Remeasurement)', desc: 'Used when work activities are defined but quantities are not. Price is per unit. <br><br><strong>Iron Triangle Focus:</strong> This contract enforces a fixed <strong>Unit Cost</strong> (e.g., $ per cubic yard), but the final total <strong>Cost</strong> and final <strong>Scope</strong> (quantity) are flexible. It\'s a way to enforce fair pricing on an unknown volume of work.' },
+            'gmp': { name: 'Guaranteed Maximum Price (GMP) for Large Projects', desc: 'A cost-reimbursable contract with a ceiling, best for large, complex projects. It often includes a shared savings clause, creating an incentive for the contractor to be efficient. <br><br><strong>Iron Triangle Focus:</strong> Enforces a fixed maximum <strong>Cost</strong>. By necessity, the <strong>Scope</strong> and <strong>Time</strong> must remain flexible to accommodate the undefined nature of the work, though a target schedule is set.' },
+            'tmNTE': { name: 'Time & Materials with Not-to-Exceed (T&M w/ NTE) for Smaller Projects', desc: 'A simpler cost-reimbursable contract with a hard cost ceiling. It\'s more straightforward than a GMP and suitable for smaller-scale projects where administrative overhead needs to be minimal. <br><br><strong>Iron Triangle Focus:</strong> Like a GMP, this primarily enforces a fixed maximum <strong>Cost</strong>. The <strong>Scope</strong> and <strong>Time</strong> are flexible variables, allowing for agility within the capped budget.' },
+            'costPlus': { name: 'Cost-Plus or Time & Materials (T&M)', desc: 'The owner pays all actual costs plus a fee for profit/overhead. <br><br><strong>Iron Triangle Focus:</strong> This model prioritizes a flexible <strong>Scope</strong> and a fast <strong>Time</strong> to start work. By definition, <strong>Cost</strong> is the flexible lever and cannot be enforced. You can only audit the costs as they are incurred to ensure they are reasonable.' },
         };
 
         let selectedPath = [];
@@ -202,21 +217,22 @@
         const resetContainer = document.getElementById('reset-container');
         const resetBtn = document.getElementById('reset-btn');
 
+        const secondLevelYesPath = document.getElementById('second-level-yes-path');
+        const secondLevelNoPath = document.getElementById('second-level-no-path');
         const secondLevelYesYes = document.getElementById('second-level-yes-yes');
         const secondLevelYesNo = document.getElementById('second-level-yes-no');
         const secondLevelNoYes = document.getElementById('second-level-no-yes');
         const secondLevelNoNo = document.getElementById('second-level-no-no');
-        const secondLevelNoSpacer1 = document.getElementById('second-level-no-spacer-1');
-        const secondLevelNoSpacer2 = document.getElementById('second-level-no-spacer-2');
-        
-        const allSecondLevel = [secondLevelYesYes, secondLevelYesNo, secondLevelNoYes, secondLevelNoNo, secondLevelNoSpacer1, secondLevelNoSpacer2];
 
-        const contractFixedPrice = document.getElementById('contract-fixedPrice');
-        const contractUnitRate = document.getElementById('contract-unitRate');
+        const contractLumpSum = document.getElementById('contract-lumpSum');
+        const contractUnitPrice = document.getElementById('contract-unitPrice');
+        const contractGmp = document.getElementById('contract-gmp');
         const contractTmNTE = document.getElementById('contract-tmNTE');
-        const contractPureTM = document.getElementById('contract-pureTM');
+        const contractCostPlus = document.getElementById('contract-costPlus');
+        
+        const allSecondLevelButtons = [secondLevelYesYes, secondLevelYesNo, secondLevelNoYes, secondLevelNoNo];
+        const allContractCards = [contractLumpSum, contractUnitPrice, contractGmp, contractCostPlus, contractTmNTE];
 
-        const allContracts = [contractFixedPrice, contractUnitRate, contractTmNTE, contractPureTM];
 
         function reset() {
             selectedPath = [];
@@ -230,25 +246,22 @@
 
             secondLevel.classList.add('hidden');
             secondLevel.classList.remove('grid');
+            secondLevelYesPath.classList.add('hidden');
+            secondLevelNoPath.classList.add('hidden');
 
-            allSecondLevel.forEach(el => {
-                el.classList.add('hidden');
+            allSecondLevelButtons.forEach(el => {
                 const button = el.querySelector('button');
-                if(button) {
-                    button.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105', 'bg-blue-900/50', 'border-blue-400');
-                }
+                button.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105', 'bg-blue-900/50', 'border-blue-400');
                 const arrow = el.querySelector('.arrow-container');
                 if (arrow) arrow.classList.add('hidden');
             });
             
             contractLevel.classList.add('hidden');
             contractLevel.classList.remove('grid');
-            allContracts.forEach(el => {
+            allContractCards.forEach(el => {
                 el.classList.add('hidden');
                 const button = el.querySelector('button');
-                 if(button) {
-                    button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
-                }
+                button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
             });
 
             resultBox.classList.add('hidden');
@@ -266,15 +279,17 @@
             if (choice === 'yes') {
                 btnYes.classList.add('bg-green-900/50', 'border-green-400', 'scale-105');
                 pathYesDown.classList.remove('hidden');
-                secondLevelYesYes.classList.remove('hidden');
-                secondLevelYesNo.classList.remove('hidden');
+                secondLevelYesPath.classList.remove('hidden');
+                // Align this path to the left side of the grid
+                secondLevelYesPath.classList.add('md:col-start-1');
+                secondLevelNoPath.classList.add('md:col-start-2');
             } else {
                 btnNo.classList.add('bg-blue-900/50', 'border-blue-400', 'scale-105');
                 pathNoDown.classList.remove('hidden');
-                secondLevelNoYes.classList.remove('hidden');
-                secondLevelNoNo.classList.remove('hidden');
-                secondLevelNoSpacer1.classList.remove('hidden');
-                secondLevelNoSpacer2.classList.remove('hidden');
+                secondLevelNoPath.classList.remove('hidden');
+                // Align this path to the right side of the grid
+                secondLevelYesPath.classList.add('md:col-start-1');
+                secondLevelNoPath.classList.add('md:col-start-2');
             }
         }
         
@@ -282,22 +297,14 @@
             selectedPath = [selectedPath[0], choice];
             selectedContract = null;
 
-            // Reset second level styles
-            [secondLevelYesYes, secondLevelYesNo, secondLevelNoYes, secondLevelNoNo].forEach(el => {
-                 const button = el.querySelector('button');
-                 button.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105', 'bg-blue-900/50', 'border-blue-400');
-                 const arrow = el.querySelector('.arrow-container');
-                 if (arrow) arrow.classList.add('hidden');
-            });
-            // Reset contract styles and visibility
-            contractLevel.classList.add('hidden');
-            contractLevel.classList.remove('grid');
-             allContracts.forEach(el => {
-                el.classList.add('hidden');
+            allSecondLevelButtons.forEach(el => {
                 const button = el.querySelector('button');
-                button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
+                button.classList.remove('bg-green-900/50', 'border-green-400', 'scale-105', 'bg-blue-900/50', 'border-blue-400');
+                const arrow = el.querySelector('.arrow-container');
+                if (arrow) arrow.classList.add('hidden');
             });
-
+            
+            allContractCards.forEach(el => el.classList.add('hidden'));
 
             let targetEl, colorClass, borderColor;
             if (selectedPath[0] === 'yes') {
@@ -317,23 +324,33 @@
             contractLevel.classList.remove('hidden');
             resultBox.classList.add('hidden');
 
-            if (selectedPath[0] === 'yes' && selectedPath[1] === 'yes') contractFixedPrice.classList.remove('hidden');
-            if (selectedPath[0] === 'yes' && selectedPath[1] === 'no') contractUnitRate.classList.remove('hidden');
-            if (selectedPath[0] === 'no' && selectedPath[1] === 'yes') contractTmNTE.classList.remove('hidden');
-            if (selectedPath[0] === 'no' && selectedPath[1] === 'no') contractPureTM.classList.remove('hidden');
+            if (selectedPath[0] === 'yes' && selectedPath[1] === 'yes') contractLumpSum.classList.remove('hidden');
+            if (selectedPath[0] === 'yes' && selectedPath[1] === 'no') contractUnitPrice.classList.remove('hidden');
+            if (selectedPath[0] === 'no' && selectedPath[1] === 'yes') {
+                contractGmp.classList.remove('hidden');
+                contractTmNTE.classList.remove('hidden');
+                // Correctly center GMP and T&M w/ NTE under the "YES - Need a Cost Cap" button
+                contractGmp.classList.remove('md:col-start-1', 'md:col-start-2', 'md:col-start-4');
+                contractTmNTE.classList.remove('md:col-start-1', 'md:col-start-2', 'md:col-start-4');
+                contractGmp.classList.add('md:col-start-2');
+                contractTmNTE.classList.add('md:col-start-3');
+            }
+            if (selectedPath[0] === 'no' && selectedPath[1] === 'no') {
+                contractCostPlus.classList.remove('hidden');
+                contractCostPlus.classList.add('md:col-start-4');
+            }
         }
 
         function handleContractChoice(contractKey) {
             selectedContract = contractKey;
             
-            // Reset styles
-             allContracts.forEach(el => {
+            allContractCards.forEach(el => {
                 const button = el.querySelector('button');
                 button.classList.remove('border-green-400', 'bg-green-900/50', 'scale-105', 'border-blue-400', 'bg-blue-900/50');
             });
             
             let targetEl, colorClass, borderColor;
-             if (selectedPath[0] === 'yes') {
+            if (selectedPath[0] === 'yes') {
                 colorClass = 'bg-green-900/50';
                 borderColor = 'border-green-400';
             } else {
@@ -341,16 +358,21 @@
                 borderColor = 'border-blue-400';
             }
 
-            if (contractKey === 'fixedPrice') targetEl = contractFixedPrice;
-            if (contractKey === 'unitRate') targetEl = contractUnitRate;
-            if (contractKey === 'tmNTE') targetEl = contractTmNTE;
-            if (contractKey === 'pureTM') targetEl = contractPureTM;
+            const contractMap = {
+                'lumpSum': contractLumpSum,
+                'unitPrice': contractUnitPrice,
+                'gmp': contractGmp,
+                'tmNTE': contractTmNTE,
+                'costPlus': contractCostPlus,
+            };
+            targetEl = contractMap[contractKey];
             
             targetEl.querySelector('button').classList.add(borderColor, colorClass, 'scale-105');
 
             document.getElementById('result-name').textContent = contracts[contractKey].name;
-            document.getElementById('result-desc').textContent = contracts[contractKey].desc;
+            document.getElementById('result-desc').innerHTML = contracts[contractKey].desc; // Use innerHTML to render the <br> and <strong> tags
             resultBox.classList.remove('hidden');
+            resultBox.scrollIntoView({ behavior: 'smooth' });
         }
 
         btnYes.addEventListener('click', () => handleFirstChoice('yes'));
@@ -362,13 +384,15 @@
         secondLevelNoYes.querySelector('button').addEventListener('click', () => handleSecondChoice('yes'));
         secondLevelNoNo.querySelector('button').addEventListener('click', () => handleSecondChoice('no'));
         
-        contractFixedPrice.querySelector('button').addEventListener('click', () => handleContractChoice('fixedPrice'));
-        contractUnitRate.querySelector('button').addEventListener('click', () => handleContractChoice('unitRate'));
+        contractLumpSum.querySelector('button').addEventListener('click', () => handleContractChoice('lumpSum'));
+        contractUnitPrice.querySelector('button').addEventListener('click', () => handleContractChoice('unitPrice'));
+        contractGmp.querySelector('button').addEventListener('click', () => handleContractChoice('gmp'));
         contractTmNTE.querySelector('button').addEventListener('click', () => handleContractChoice('tmNTE'));
-        contractPureTM.querySelector('button').addEventListener('click', () => handleContractChoice('pureTM'));
+        contractCostPlus.querySelector('button').addEventListener('click', () => handleContractChoice('costPlus'));
 
+        // Initial call to set the state
+        reset();
     </script>
-
 </body>
 </html>
 
